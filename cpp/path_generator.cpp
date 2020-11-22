@@ -12,26 +12,30 @@ PathGenerator::PathGenerator(){
 
 
 void PathGenerator::add_T(){
-    branch_path.push_back(BranchResult::TAKEN);
+    BranchIns *new_br = new BranchIns;
+    new_br->set_directioin(BranchResult::TAKEN);
+    branch_ins_list.push_back(new_br);
 }
 
 void PathGenerator::add_NT(){
-    branch_path.push_back(BranchResult::NOT_TAKEN);
+    BranchIns *new_br = new BranchIns;
+    new_br->set_directioin(BranchResult::NOT_TAKEN);
+    branch_ins_list.push_back(new_br);
 }
 
 void PathGenerator::show_path(){
     int length = 0;
-    if(branch_path.empty()){
+    if(branch_ins_list.empty()){
         std::cout<<"[PathGenerator]The path is empty. Please add path.\n";
         exit(0);
     }else{
-        length = branch_path.size();
+        length = branch_ins_list.size();
         for(int ibranch=0;ibranch < length;ibranch++){
             if((ibranch==0) | (ibranch%10!=0)){
-                view_branch_value(branch_path[ibranch]);
+                view_branch_value(branch_ins_list[ibranch]->get_cur_dir());
             }else{
                 std::cout<<"\n";
-                view_branch_value(branch_path[ibranch]);
+                view_branch_value(branch_ins_list[ibranch]->get_cur_dir());
             }
         }
         std::cout<<"\n";
@@ -39,7 +43,7 @@ void PathGenerator::show_path(){
 }
 
 void PathGenerator::add_for_branch(int num_loop){
-    
+
     for(int iT = 0; iT < num_loop - 1 ;iT++){
         add_T();
     }
@@ -47,21 +51,6 @@ void PathGenerator::add_for_branch(int num_loop){
 
 }
 
-void PathGenerator::repeat_path(int times){
-
-    if(times!=0){
-        std::vector<BranchResult> path_now;
-        path_now.assign(branch_path.begin(), branch_path.end());
-
-        for(int it=0;it<times;it++){
-            branch_path.insert(branch_path.end(),path_now.begin(),path_now.end());
-        }
-
-    }else{
-        std::cout<<"[PathGenerator]Please enter a valid repeat times.\n";
-    }
-
-}
 
 void PathGenerator::add_random(int num_branch){
 
@@ -78,17 +67,29 @@ void PathGenerator::add_random(int num_branch){
         }
     }
 
+}
 
+void PathGenerator::add_Dbranch(std::vector<BranchResult> *path){
+    if(path->size()!=0){
+        // std::cout<<"the dynamic path size is: "<<path->size()<<std::endl;
+        BranchInsDynamic *new_dbr = new BranchInsDynamic;
+        new_dbr->set_path(path);
+        branch_ins_list.push_back(new_dbr);
+    }else{
+        std::cout<<"The path is 0."<<std::endl;
+    }
 }
 
 void PathGenerator::add_default_path(){
+    std::vector<BranchResult> local_path = {BranchResult::NOT_TAKEN, 
+                                            BranchResult::NOT_TAKEN, 
+                                            BranchResult::TAKEN, 
+                                            BranchResult::TAKEN};
     add_for_branch(5);
-    add_T();
-    add_T();
-    add_NT();
+    add_Dbranch(&local_path);
     add_NT();
     add_T();
-    add_T();
-    add_random(10);
-    repeat_path(3);
+    add_Dbranch(&local_path);
+    add_random(4);
+    
 }

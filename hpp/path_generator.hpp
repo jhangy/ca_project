@@ -11,8 +11,8 @@ class PathGenerator{
     // random threshlod default is 0.5, 50% T 50% NT
     double random_threshold;
 
-    // path of branch
-    std::vector<BranchResult> branch_path;
+    // ins branch
+    std::vector<BranchIns *> branch_ins_list;
 
 public:
 
@@ -28,6 +28,9 @@ public:
     // add not taken branch to path
     void add_NT();
     
+    // add a local dynamic branch
+    void add_Dbranch(std::vector<BranchResult> *path);
+
     // print branch path
     void show_path();
 
@@ -42,7 +45,7 @@ public:
     void add_random(int num_branch);
 
     // return pointer of branch_path
-    std::vector<BranchResult> *get_path(){return &branch_path;}
+    std::vector<BranchIns *> *get_path(){return &branch_ins_list;}
 
     void view_branch_value(BranchResult br){
         switch(static_cast<BranchResult>(br)){
