@@ -12,13 +12,17 @@ PathGenerator::PathGenerator(){
 
 
 void PathGenerator::add_T(){
+    int index_now = branch_ins_list.size();
     BranchIns *new_br = new BranchIns;
+    new_br->set_index_pc(index_now);
     new_br->set_directioin(BranchResult::TAKEN);
     branch_ins_list.push_back(new_br);
 }
 
 void PathGenerator::add_NT(){
+    int index_now = branch_ins_list.size();
     BranchIns *new_br = new BranchIns;
+    new_br->set_index_pc(index_now);
     new_br->set_directioin(BranchResult::NOT_TAKEN);
     branch_ins_list.push_back(new_br);
 }
@@ -72,7 +76,9 @@ void PathGenerator::add_random(int num_branch){
 void PathGenerator::add_Dbranch(std::vector<BranchResult> *path){
     if(path->size()!=0){
         // std::cout<<"the dynamic path size is: "<<path->size()<<std::endl;
+        int index_now = branch_ins_list.size();
         BranchInsDynamic *new_dbr = new BranchInsDynamic;
+        new_dbr->set_index_pc(index_now);
         new_dbr->set_path(path);
         branch_ins_list.push_back(new_dbr);
     }else{

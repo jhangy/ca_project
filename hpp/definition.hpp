@@ -11,6 +11,7 @@ enum class BranchResult{
 };
 
 class BranchIns{
+    int index_pc = 0;
     BranchResult directon;
 public:
     ~BranchIns(){};
@@ -18,6 +19,8 @@ public:
     void set_directioin(BranchResult dir){
         directon = dir;
     }
+    void set_index_pc(int ind_pc){index_pc = ind_pc;}
+    int get_index_pc(){return index_pc;}
 };
 
 class BranchInsDynamic : public BranchIns{

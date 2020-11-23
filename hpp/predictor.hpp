@@ -16,7 +16,7 @@ class PredictorBase{
   std::vector<BranchResult> _history_buffer;
 public:
   ~PredictorBase(){}
-  virtual BranchResult predict_branch(BranchResult next_branch){
+  virtual BranchResult predict_branch(int index_pc, BranchResult next_branch){
     std::cout<<"[PredictorBase]This is fahter of predictor. Please initialize a type of predictor.";}
 };
 
@@ -25,7 +25,7 @@ class BpredNotTaken:  public PredictorBase{
 public:
   BpredNotTaken(){}
   ~BpredNotTaken(){}
-  BranchResult predict_branch(BranchResult next_branch);
+  BranchResult predict_branch(int index_pc, BranchResult next_branch);
 };
 
 #endif
