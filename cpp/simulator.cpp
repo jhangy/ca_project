@@ -79,6 +79,11 @@ void Simulator::set_predictor(PredictorList pred_ty){
             predictor = new BpredNotTaken;
             break;
         }
+        case PredictorList::PIECEWISELINEAR:{
+            predictor = new PiecewiseLinear;
+            predictor->initialize_W(10,10,10);
+            break;
+        }
         default:{
             std::cout<<"[Simulator]Should initialize a predictor\n";
         }
@@ -92,18 +97,21 @@ void Simulator::run(){
 
         for(int ibranch=0;ibranch<branch_ins_list.size();ibranch++){
 
-            BranchResult current_branch = branch_ins_list[ibranch]->get_cur_dir();
+            BranchResult current_branch_result = branch_ins_list[ibranch]->get_cur_dir();
             int pc_now = branch_ins_list[ibranch]->get_index_pc();
-            BranchResult predicted_branch =  predictor->predict_branch(pc_now, current_branch);
-            
-            branch_history.push_back(current_branch);
-            branch_pred.push_back(predicted_branch);
+            BranchResult predicted_branch =  predictor->predict_branch(pc_now, address_branch_history, branch_history);
 
-            if(predicted_branch == current_branch){
+            if(predicted_branch == current_branch_result){
                 pred_result.push_back(true);
             }else{
                 pred_result.push_back(false);
+                predictor->update_weigths(pc_now, address_branch_history, branch_history,current_branch_result);
             }
+
+            address_branch_history.push_back(pc_now);
+            branch_history.push_back(current_branch_result);
+            branch_pred.push_back(predicted_branch);
+
         }
 
     }

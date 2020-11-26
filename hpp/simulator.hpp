@@ -12,6 +12,9 @@ class Simulator{
     std::vector<BranchResult> branch_history;
 
     // store the ins branch path which will be used to simulate predictor
+    std::vector<uint32_t> address_branch_history;
+
+    // store the ins branch path which will be used to simulate predictor
     std::vector<BranchIns *> branch_ins_list;
 
     // store the result which is predicted by predictor

@@ -16,14 +16,14 @@ int main(){
   /* initialize the Simulator */
   Simulator sim;
   sim.set_branch_ins_list(pa_gen.get_path());
-  sim.set_predictor(PredictorList::BPREDICT_NOT_TAKEN);
+  sim.set_predictor(PredictorList::PIECEWISELINEAR);
 
   /* run simulation*/
-  sim.set_running_times(4);
+  sim.set_running_times(1000);
   sim.run();
-  sim.show_path();
-  sim.show_pred_path();
-  sim.show_acc_pred_path();
+  // sim.show_path();
+  // sim.show_pred_path();
+  // sim.show_acc_pred_path();
 
   double acc = sim.get_accuracy();
   std::cout<<"The predictor accuracy is: "<<acc<<std::endl;

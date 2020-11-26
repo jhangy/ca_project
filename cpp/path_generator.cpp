@@ -51,6 +51,7 @@ void PathGenerator::add_for_branch(int num_loop){
     for(int iT = 0; iT < num_loop - 1 ;iT++){
         add_T();
     }
+
     add_NT();
 
 }
@@ -96,6 +97,11 @@ void PathGenerator::add_default_path(){
     add_NT();
     add_T();
     add_Dbranch(&local_path);
-    add_random(4);
+    add_NT();
+    add_T();
+    add_for_branch(7);
+    add_NT();
+    add_T();
+    // add_random(4);
     
 }
