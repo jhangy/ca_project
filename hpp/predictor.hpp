@@ -31,6 +31,9 @@ public:
 
   virtual void update_weigths(int index_pc, std::vector<uint32_t> &GA, std::vector<BranchResult> &GHR, BranchResult outcome){
     std::cout<<"[PredictorBase]This is fahter of predictor. Please initialize a type of predictor.";}
+
+  virtual void show_W(){
+    std::cout<<"[PredictorBase]This is fahter of predictor. Please initialize a type of predictor.";}
     
 };
 
@@ -46,9 +49,11 @@ public:
 };
 
 class PiecewiseLinear:  public PredictorBase{
+
   int size_1d = 0;
   int size_2d = 0;
   int size_3d = 0;
+
   std::vector<std::vector<std::vector<int>>> W;
 
 public:
@@ -64,6 +69,9 @@ public:
 
   // update outcome if not right
   void update_weigths(int index_pc, std::vector<uint32_t> &GA, std::vector<BranchResult> &GHR, BranchResult outcome);
+
+  //show W value
+  void show_W();
 
 };
 

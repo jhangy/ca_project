@@ -4,6 +4,23 @@
 #include <iostream>
 
 Simulator::Simulator(){
+    // the size of global history reg is set to 10
+    for(int i = 0; i < length_global_his; i++){
+        branch_history_buf.push_back(BranchResult::TAKEN);
+    }
+    for(int i = 0; i < length_global_his; i++){
+        address_branch_history_buf.push_back(0);
+    }
+}
+
+Simulator::Simulator(int size_his_reg){
+    length_global_his = size_his_reg;
+    for(int i = 0; i < length_global_his; i++){
+        branch_history_buf.push_back(BranchResult::TAKEN);
+    }
+    for(int i = 0; i < length_global_his; i++){
+        address_branch_history_buf.push_back(0);
+    }
 }
 
 void Simulator::show_path(){
@@ -81,7 +98,7 @@ void Simulator::set_predictor(PredictorList pred_ty){
         }
         case PredictorList::PIECEWISELINEAR:{
             predictor = new PiecewiseLinear;
-            predictor->initialize_W(10,10,10);
+            predictor->initialize_W(6,6,6);
             break;
         }
         default:{
@@ -99,21 +116,26 @@ void Simulator::run(){
 
             BranchResult current_branch_result = branch_ins_list[ibranch]->get_cur_dir();
             int pc_now = branch_ins_list[ibranch]->get_index_pc();
-            BranchResult predicted_branch =  predictor->predict_branch(pc_now, address_branch_history, branch_history);
+            BranchResult predicted_branch =  predictor->predict_branch(pc_now, address_branch_history_buf, branch_history_buf);
 
             if(predicted_branch == current_branch_result){
-                pred_result.push_back(true);
+                pred_result.insert(pred_result.begin(),true);
             }else{
-                pred_result.push_back(false);
-                predictor->update_weigths(pc_now, address_branch_history, branch_history,current_branch_result);
+                pred_result.insert(pred_result.begin(),false);
+                predictor->update_weigths(pc_now, address_branch_history_buf, branch_history_buf,current_branch_result);
             }
+            
+            address_branch_history_buf.pop_back();
+            address_branch_history_buf.insert(address_branch_history_buf.begin(),pc_now);
+            address_branch_history.insert(address_branch_history.begin(),pc_now);
 
-            address_branch_history.push_back(pc_now);
-            branch_history.push_back(current_branch_result);
-            branch_pred.push_back(predicted_branch);
+            branch_history_buf.pop_back();
+            branch_history_buf.insert(branch_history_buf.begin(),current_branch_result);
+            branch_history.insert(branch_history.begin(),current_branch_result);
+
+            branch_pred.insert(branch_pred.begin(),predicted_branch);
 
         }
-
     }
 
 }

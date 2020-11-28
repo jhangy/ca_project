@@ -89,19 +89,23 @@ void PathGenerator::add_Dbranch(std::vector<BranchResult> *path){
 
 void PathGenerator::add_default_path(){
     std::vector<BranchResult> local_path = {BranchResult::NOT_TAKEN, 
-                                            BranchResult::NOT_TAKEN, 
-                                            BranchResult::TAKEN, 
                                             BranchResult::TAKEN};
-    add_for_branch(5);
-    add_Dbranch(&local_path);
-    add_NT();
+    // add_for_branch(5);
+    // add_Dbranch(&local_path);
+    add_T();
+    // add_Dbranch(&local_path);
+    add_T();
+    add_T();
     add_T();
     add_Dbranch(&local_path);
     add_NT();
     add_T();
-    add_for_branch(7);
+    // add_Dbranch(&local_path);
+    add_T();
     add_NT();
     add_T();
+    // add_Dbranch(&local_path);
+    add_NT();
     // add_random(4);
     
 }
