@@ -21,13 +21,16 @@ public:
 
     // add default path
     void add_default_path();
+    void add_default_path_midterm();
 
     // add taken branch to path
     void add_T();
-    
+    void add_T_windex(int pc_ind);
+
     // add not taken branch to path
     void add_NT();
-    
+    void add_NT_windex(int pc_ind);
+
     // add a local dynamic branch
     void add_Dbranch(std::vector<BranchResult> *path);
 

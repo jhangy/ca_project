@@ -64,6 +64,15 @@ public:
     //print path
     void show_path();
 
+    //print GA
+    void show_GA();
+
+    //print address history
+    void show_ad_his();
+
+    //print GBR
+    void show_GBR();
+
     //print prdict history
     void show_pred_path();
 

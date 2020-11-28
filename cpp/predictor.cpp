@@ -61,7 +61,12 @@ if(length_GA>0){
   for(int ibr = 0; ibr < length_GA ; ibr++){
     int index_2d = GA[ibr]%size_2d + 1;
     int index_3d = (ibr)%(size_3d) + 1;
-    predict_weight = predict_weight + W[index_1d][index_2d][index_3d];
+    if(GHR[ibr]==BranchResult::TAKEN){
+      predict_weight = predict_weight + W[index_1d][index_2d][index_3d];
+    }else{
+      predict_weight = predict_weight - W[index_1d][index_2d][index_3d];
+    }
+      
   }
 }
 

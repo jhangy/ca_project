@@ -19,10 +19,24 @@ void PathGenerator::add_T(){
     branch_ins_list.push_back(new_br);
 }
 
+void PathGenerator::add_T_windex(int pc_ind){
+    BranchIns *new_br = new BranchIns;
+    new_br->set_index_pc(pc_ind);
+    new_br->set_directioin(BranchResult::TAKEN);
+    branch_ins_list.push_back(new_br);
+}
+
 void PathGenerator::add_NT(){
     int index_now = branch_ins_list.size();
     BranchIns *new_br = new BranchIns;
     new_br->set_index_pc(index_now);
+    new_br->set_directioin(BranchResult::NOT_TAKEN);
+    branch_ins_list.push_back(new_br);
+}
+
+void PathGenerator::add_NT_windex(int pc_ind){
+    BranchIns *new_br = new BranchIns;
+    new_br->set_index_pc(pc_ind);
     new_br->set_directioin(BranchResult::NOT_TAKEN);
     branch_ins_list.push_back(new_br);
 }
@@ -88,24 +102,54 @@ void PathGenerator::add_Dbranch(std::vector<BranchResult> *path){
 }
 
 void PathGenerator::add_default_path(){
-    std::vector<BranchResult> local_path = {BranchResult::NOT_TAKEN, 
+    std::vector<BranchResult> local_path = {BranchResult::TAKEN, 
+                                            BranchResult::NOT_TAKEN};
+    std::vector<BranchResult> local_path2 = {BranchResult::NOT_TAKEN, 
                                             BranchResult::TAKEN};
-    // add_for_branch(5);
-    // add_Dbranch(&local_path);
-    add_T();
-    // add_Dbranch(&local_path);
-    add_T();
-    add_T();
-    add_T();
     add_Dbranch(&local_path);
     add_NT();
-    add_T();
-    // add_Dbranch(&local_path);
-    add_T();
     add_NT();
-    add_T();
-    // add_Dbranch(&local_path);
     add_NT();
-    // add_random(4);
+    add_Dbranch(&local_path);
+    add_NT();
+    add_NT();
+    add_Dbranch(&local_path);
+    
+}
+
+void PathGenerator::add_default_path_midterm(){
+    int a = 0;
+    int b = 0;
+    int count = 0;
+
+    // add_NT_windex(0);
+    for(int i=0;i<6;i++){
+        if (b == 0){
+            add_NT_windex(1);
+            a = 1;
+        }else{
+            add_T_windex(1);
+        }
+    
+        if (a == 0){
+            add_NT_windex(2);
+            b = 0;
+            a = 1;
+        }else{
+            add_T_windex(2);
+        }
+    
+        // True every 3nd iteration
+        if (count % 3 == 0){
+            add_NT_windex(3);
+            a = 0;
+            b = 1;
+        }else{
+            add_T_windex(3);
+        }
+    ++count;
+    add_T_windex(4);
+    }
+    add_NT_windex(4);
     
 }

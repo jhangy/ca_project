@@ -43,6 +43,67 @@ void Simulator::show_path(){
     }
 }
 
+void Simulator::show_GBR(){
+    int length = 0;
+    
+    if(branch_history_buf.empty()){
+        std::cout<<"[Simulator]The buf is empty. Please add buf.\n";
+    }else{
+        length = branch_history_buf.size();
+        std::cout<<"GBR is :"<<length<<std::endl;
+        for(int ibranch=0;ibranch < length;ibranch++){
+            if((ibranch==0) | (ibranch%10!=0)){
+                view_branch_value(branch_history_buf[ibranch]);
+            }else{
+                std::cout<<"\n";
+                view_branch_value(branch_history_buf[ibranch]);
+            }
+        }
+        std::cout<<"\n";
+    }
+}
+
+
+void Simulator::show_GA(){
+    int length = 0;
+    
+    if(address_branch_history_buf.empty()){
+        std::cout<<"[Simulator]The GA is empty. Please add buf.\n";
+    }else{
+        length = address_branch_history_buf.size();
+        std::cout<<"GBR is :"<<length<<std::endl;
+        for(int ibranch=0;ibranch < length;ibranch++){
+            if((ibranch==0) | (ibranch%10!=0)){
+                std::cout<<address_branch_history_buf[ibranch]<<" ";
+            }else{
+                std::cout<<"\n";
+                std::cout<<address_branch_history_buf[ibranch]<<" ";
+            }
+        }
+        std::cout<<"\n";
+    }
+}
+
+void Simulator::show_ad_his(){
+    int length = 0;
+    
+    if(address_branch_history.empty()){
+        std::cout<<"[Simulator]The GA is empty. Please add buf.\n";
+    }else{
+        length = address_branch_history.size();
+        std::cout<<"addr_his is :"<<length<<std::endl;
+        for(int ibranch=0;ibranch < length;ibranch++){
+            if((ibranch==0) | (ibranch%10!=0)){
+                std::cout<<address_branch_history[ibranch]<<" ";
+            }else{
+                std::cout<<"\n";
+                std::cout<<address_branch_history[ibranch]<<" ";
+            }
+        }
+        std::cout<<"\n";
+    }
+}
+
 void Simulator::show_pred_path(){
     int length = 0;
     if(branch_pred.empty()){

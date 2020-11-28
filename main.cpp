@@ -10,7 +10,7 @@ int main(){
 
   /* initialize the path generator */
   PathGenerator pa_gen;
-  pa_gen.add_default_path();
+  pa_gen.add_default_path_midterm();
   // pa_gen.show_path();
 
   /* initialize the Simulator */
@@ -19,19 +19,23 @@ int main(){
   sim.set_predictor(PredictorList::PIECEWISELINEAR);
   // sim.show_w();
   /* run simulation*/
-  sim.set_running_times(10);
+  sim.set_running_times(3);
+  sim.show_GA();
+  sim.show_GBR();
   sim.run();
+  sim.show_GA();
+  sim.show_GBR();
+  sim.show_ad_his();
   sim.show_path();
-  // sim.show_w();
+  
   sim.show_pred_path();
   sim.show_acc_pred_path();
+
+  // sim.show_w();
 
   double acc = sim.get_accuracy();
   std::cout<<"The predictor accuracy is: "<<acc<<std::endl;
 
-  // BranchInsDynamic br;
-  // br.set_path(pa_gen.get_path());
-  // br.show_path();
 
   std::cout<<"End simulation. "<<std::endl;
   return 0;
