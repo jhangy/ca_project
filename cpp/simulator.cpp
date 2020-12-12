@@ -11,6 +11,7 @@ Simulator::Simulator(){
     for(int i = 0; i < length_global_his; i++){
         address_branch_history_buf.push_back(0);
     }
+    predictor=nullptr;
 }
 
 Simulator::Simulator(int size_his_reg){
@@ -21,6 +22,7 @@ Simulator::Simulator(int size_his_reg){
     for(int i = 0; i < length_global_his; i++){
         address_branch_history_buf.push_back(0);
     }
+    predictor=nullptr;
 }
 
 void Simulator::show_path(){
@@ -147,8 +149,9 @@ void Simulator::set_branch_ins_list(std::vector<BranchIns *> *b_list){
     branch_ins_list.insert(branch_ins_list.begin(),b_list->begin(), b_list->end());
 }
 
-void Simulator::set_predictor(PredictorList pred_ty){
-    switch(static_cast<PredictorList>(pred_ty)){
+void Simulator::set_predictor(PredictorList pred_ty, int size_local_branch, int size_global_branch, int size_global_his){
+    if(predictor==nullptr){
+        switch(static_cast<PredictorList>(pred_ty)){
         case PredictorList::NOPREDICOTR:{
             std::cout<<"[Simulator]Should initialize a predictor\n";
             break;
@@ -159,13 +162,36 @@ void Simulator::set_predictor(PredictorList pred_ty){
         }
         case PredictorList::PIECEWISELINEAR:{
             predictor = new PiecewiseLinear;
-            predictor->initialize_W(6,6,6);
+            predictor->initialize_W(size_local_branch,size_global_branch,size_global_his);
             break;
         }
         default:{
             std::cout<<"[Simulator]Should initialize a predictor\n";
         }
+        }
+    }else{
+        delete predictor;
+        predictor==nullptr;
+        switch(static_cast<PredictorList>(pred_ty)){
+        case PredictorList::NOPREDICOTR:{
+            std::cout<<"[Simulator]Should initialize a predictor\n";
+            break;
+        }
+        case PredictorList::BPREDICT_NOT_TAKEN:{
+            predictor = new BpredNotTaken;
+            break;
+        }
+        case PredictorList::PIECEWISELINEAR:{
+            predictor = new PiecewiseLinear;
+            predictor->initialize_W(size_local_branch,size_global_branch,size_global_his);
+            break;
+        }
+        default:{
+            std::cout<<"[Simulator]Should initialize a predictor\n";
+        }
+        }
     }
+    
 }
 
 

@@ -106,14 +106,10 @@ void PathGenerator::add_default_path(){
                                             BranchResult::NOT_TAKEN};
     std::vector<BranchResult> local_path2 = {BranchResult::NOT_TAKEN, 
                                             BranchResult::TAKEN};
-    add_Dbranch(&local_path);
+    add_T();
+    add_T();
+    add_T();
     add_NT();
-    add_NT();
-    add_NT();
-    add_Dbranch(&local_path);
-    add_NT();
-    add_NT();
-    add_Dbranch(&local_path);
     
 }
 
@@ -151,5 +147,78 @@ void PathGenerator::add_default_path_midterm(){
     add_T_windex(4);
     }
     add_NT_windex(4);
+    
+}
+
+void PathGenerator::add_default_path_custom(){
+    int a = 0;
+    int b = 0;
+    int c = 0;
+    int d = 0;
+    int e = 0;
+    int f = 0;
+    int g = 0;
+    int count = 0;
+    srand(time(NULL));
+    double ans_rand = double(double(rand())/double(RAND_MAX));
+    bool add_Taken = (ans_rand>random_threshold)?1:0;
+    // add_NT_windex(0);
+
+    for(int i=0;i<10;i++){
+        ans_rand = double(double(rand())/double(RAND_MAX));
+        a = (ans_rand>random_threshold)?1:0;
+        if(a){
+            add_NT_windex(1);
+            b=1;
+        }else{
+            add_T_windex(1);
+        }
+
+        if(b){
+            add_NT_windex(2);
+        }else{
+            add_T_windex(2);
+        }
+
+        ans_rand = double(double(rand())/double(RAND_MAX));
+        c = (ans_rand>random_threshold)?1:0;
+
+        if(c){
+            add_NT_windex(3);
+            d=1;
+        }else{
+            add_T_windex(3);
+        }
+        if(d){
+            add_NT_windex(4);
+        }else{
+            add_T_windex(4);
+        }
+        ans_rand = double(double(rand())/double(RAND_MAX));
+        e = (ans_rand>random_threshold)?1:0;
+        if(e){
+            add_NT_windex(5);
+            f=1;
+        }else{
+            add_T_windex(5);
+        }
+        if(d){
+            add_NT_windex(9);
+        }else{
+            add_T_windex(9);
+        }
+        ans_rand = double(double(rand())/double(RAND_MAX));
+        g = (ans_rand>random_threshold)?1:0;
+
+        if(g){
+            add_NT_windex(17);
+        }else{
+            add_T_windex(17);
+        }
+        add_T_windex(18);
+    }
+    add_NT_windex(18);
+    
+    
     
 }

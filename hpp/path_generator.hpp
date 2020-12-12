@@ -22,7 +22,8 @@ public:
     // add default path
     void add_default_path();
     void add_default_path_midterm();
-
+    void add_default_path_custom();
+    
     // add taken branch to path
     void add_T();
     void add_T_windex(int pc_ind);
@@ -62,6 +63,7 @@ public:
             }
         }
     }
+    
 };
 
 #endif

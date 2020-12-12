@@ -65,16 +65,13 @@ if(length_GA>0){
       predict_weight = predict_weight + W[index_1d][index_2d][index_3d];
     }else{
       predict_weight = predict_weight - W[index_1d][index_2d][index_3d];
-    }
-      
+    }      
   }
 }
-
 
 if(predict_weight > -1){
   prediction = BranchResult::TAKEN;
 }
-
 
 return prediction;
 

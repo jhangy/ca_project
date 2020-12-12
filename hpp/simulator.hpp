@@ -53,7 +53,7 @@ public:
     void set_branch_ins_list(std::vector<BranchIns *> *b_list);
 
     // initial the predictor
-    void set_predictor(PredictorList pred_ty);
+    void set_predictor(PredictorList pred_ty,int size_local_branch=5, int size_global_branch=5, int size_global_his=5);
 
     // run simulator
     void run();
